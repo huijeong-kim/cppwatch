@@ -58,14 +58,15 @@ fn get_command_to_execute(path: &PathBuf, cmd: String) -> String {
 }
 
 fn run_command(cmd: String) {
-    // TODO printout result to terminal
     println!("Execute: {}", cmd);
 
-    let output = Command::new("sh")
+    let mut child = Command::new("sh")
         .arg("-c")
         .arg(cmd)
-        .output()
+        .spawn()
         .expect("Failed to execute command");
 
-    println!("Result: {:?}", output.stdout);
+    // TODO kill child when src is updated again
+    let status = child.wait().expect("Failed to wait for the command completion");
+    println!("Result: {:?}", status);
 }
