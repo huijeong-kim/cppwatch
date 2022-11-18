@@ -10,7 +10,9 @@ pub fn run(path: PathBuf, cmd: String) -> Result<(), Box<dyn std::error::Error>>
 
     let (tx, rx) = std::sync::mpsc::channel();
 
-    // Watch source folder
+    // Watcher -(tx, rx)- check_changes_thread
+    // check_changes_trhead -(tx, rx)- run_command_thread
+
     println!("Watch {}", path.display());
     let mut watcher = watcher(tx, Duration::from_secs(1)).expect("Failed to watch src folder");
     watcher

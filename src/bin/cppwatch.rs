@@ -1,13 +1,11 @@
 use clap::{arg, value_parser, Command};
 use std::path::PathBuf;
 
-mod watch_and_execute;
-
 fn main() -> Result<(), Box<dyn std::error::Error>> {
     // TODO use logger
 
     let (path, cmd) = get_values().unwrap();
-    watch_and_execute::run(path, cmd)?;
+    cppwatch::watch_and_execute::run(path, cmd)?;
 
     Ok(())
 }
